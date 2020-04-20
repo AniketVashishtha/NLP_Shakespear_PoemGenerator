@@ -12,10 +12,8 @@ import tensorflow.keras.utils as ku
 import numpy as np
 
 tokenizer = Tokenizer()
-!wget --no-check-certificate \
-    https://storage.googleapis.com/laurencemoroney-blog.appspot.com/sonnets.txt \
-    -O /tmp/sonnets.txt
-data = open('/tmp/sonnets.txt').read()
+
+data = open('poem.txt').read()
 
 corpus = data.lower().split("\n")
 
@@ -49,7 +47,7 @@ model.add(LSTM(100))  #(# Another LSTM Layer)
 model.add(Dense(total_words/2, activation='relu'))  #(# A Dense Layer including regularizers)
 model.add(Dense(total_words, activation='softmax'))  #(# A Dense Layer)
 # Pick an optimizer
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')  #(# Pick a loss function and an optimizer)
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])  #(# Pick a loss function and an optimizer)
 print(model.summary())
 
 history = model.fit(predictors, label, epochs=100, verbose=1)
@@ -71,7 +69,7 @@ plt.legend()
 
 plt.show()
 
-seed_text = "Help me Obi Wan Kenobi, you're my only hope"
+seed_text = "This world is beautiful"
 next_words = 100
   
 for _ in range(next_words):
